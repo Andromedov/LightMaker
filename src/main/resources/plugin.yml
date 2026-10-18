@@ -2,4 +2,4 @@ name: LightMaker
 version: ${project.version}
 main: mov.naspen.lightmaker.LightMaker
 api-version: 1.21
-authors: [ Andromedov ]
+authors: [ naspen, Andromedov ]
