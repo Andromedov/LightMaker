@@ -24,6 +24,8 @@ light_ingredients:
 light_ingredients_to_bottle:
   torch:
     quantity: 1
+  copper_torch:
+    quantity: 2
   redstone_torch:
     quantity: 2
   glow_berries:
@@ -31,6 +33,22 @@ light_ingredients_to_bottle:
   lantern:
     quantity: 4
   soul_lantern:
+    quantity: 6
+  copper_lantern:
+    quantity: 6
+  exposed_copper_lantern:
+    quantity: 6
+  weathered_copper_lantern:
+    quantity: 6
+  oxidized_copper_lantern:
+    quantity: 6
+  waxed_copper_lantern:
+    quantity: 6
+  waxed_exposed_copper_lantern:
+    quantity: 6
+  waxed_weathered_copper_lantern:
+    quantity: 6
+  waxed_oxidized_copper_lantern:
     quantity: 6
   glowstone:
     quantity: 4
