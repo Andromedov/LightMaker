@@ -1,29 +1,26 @@
 package mov.naspen.lightmaker.util;
 
 import mov.naspen.lightmaker.LightMaker;
-import org.bukkit.Bukkit;
-import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
+import org.bukkit.event.player.PlayerJoinEvent;
+import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.plugin.Plugin;
-import org.bukkit.scheduler.BukkitRunnable;
 
+public class HandWatcher implements Listener {
 
-public class HandWatcher {
+    public static void startWatching(Plugin plugin) {
+        plugin.getServer().getPluginManager().registerEvents(new HandWatcher(), plugin);
+        plugin.getServer().getOnlinePlayers().forEach(LightMaker.projector::add);
+    }
 
+    @EventHandler
+    public void onPlayerJoin(PlayerJoinEvent event) {
+        LightMaker.projector.add(event.getPlayer());
+    }
 
-
-    public static void startWatching(Plugin plugin){
-
-        new BukkitRunnable() {
-            public void run() {
-                for (Player p : Bukkit.getOnlinePlayers()) {
-                    if(Lights.isLight(p.getInventory().getItemInMainHand()) || Lights.isLight(p.getInventory().getItemInOffHand())){
-                        LightMaker.projector.add(p);
-                    }else{
-                        LightMaker.projector.remove(p);
-                    }
-                }
-            }
-        }.runTaskTimer(plugin, 0L, LightMaker.watchPeriod);
+    @EventHandler
+    public void onPlayerQuit(PlayerQuitEvent event) {
+        LightMaker.projector.remove(event.getPlayer());
     }
 }
-

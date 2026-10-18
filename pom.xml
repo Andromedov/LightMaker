@@ -6,13 +6,14 @@
 
     <groupId>mov.naspen</groupId>
     <artifactId>LightMaker</artifactId>
-    <version>1.2.3</version>
+    <version>1.2.4</version>
     <packaging>jar</packaging>
 
     <name>LightMaker</name>
 
     <properties>
         <java.version>21</java.version>
+        <paper.version>1.21.11-R0.1-SNAPSHOT</paper.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
@@ -56,8 +57,17 @@
         <dependency>
             <groupId>io.papermc.paper</groupId>
             <artifactId>paper-api</artifactId>
-            <version>1.21.11-R0.1-SNAPSHOT</version>
+            <version>${paper.version}</version>
             <scope>provided</scope>
         </dependency>
     </dependencies>
+    <profiles>
+        <profile>
+            <id>paper-26.3</id>
+            <properties>
+                <java.version>25</java.version>
+                <paper.version>26.3.build.205-stable</paper.version>
+            </properties>
+        </profile>
+    </profiles>
 </project>

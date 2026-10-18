@@ -2,4 +2,5 @@ name: LightMaker
 version: ${project.version}
 main: mov.naspen.lightmaker.LightMaker
 api-version: 1.21
+folia-supported: true
 authors: [ naspen, Andromedov ]

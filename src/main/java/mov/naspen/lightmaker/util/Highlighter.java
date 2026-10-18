@@ -1,57 +1,51 @@
 package mov.naspen.lightmaker.util;
 
-import mov.naspen.lightmaker.LightMaker;
+import io.papermc.paper.threadedregions.scheduler.ScheduledTask;
 import org.bukkit.entity.Player;
-import org.bukkit.scheduler.BukkitRunnable;
-import org.bukkit.scheduler.BukkitTask;
+import org.bukkit.plugin.Plugin;
 
-import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class Highlighter {
 
-    protected LightMaker plugin;
-    private Map<UUID, ParticleRender> particleMapper = new HashMap<>();
-    private BukkitTask projectorTask;
+    private final Plugin plugin;
+    private final long period;
+    private final Map<UUID, ScheduledTask> tasks = new ConcurrentHashMap<>();
 
-    public Highlighter(LightMaker plugin) {
+    public Highlighter(Plugin plugin, long period) {
         this.plugin = plugin;
-        start();
-    }
-
-    public void start() {
-        if (projectorTask != null) {
-            projectorTask.cancel();
-            projectorTask = null;
-        }
-        int updateRate = 1;
-        projectorTask = new BukkitRunnable() {
-            @Override
-            public void run() {
-                for (ParticleRender visual : particleMapper.values()) {
-                    visual.update();
-                }
-            }
-        }.runTaskTimer(plugin, updateRate, LightMaker.watchPeriod);
+        this.period = period;
     }
 
     public void add(Player player) {
-        if (player == null || this.contains(player.getUniqueId())) return;
-        ParticleRender visual = new ParticleRender(this, player.getUniqueId());
-        particleMapper.put(player.getUniqueId(), visual);
+        tasks.computeIfAbsent(player.getUniqueId(), uuid ->
+                player.getScheduler().runAtFixedRate(plugin, task -> {
+                    if (Lights.isLight(player.getInventory().getItemInMainHand())
+                            || Lights.isLight(player.getInventory().getItemInOffHand())) {
+                        ParticleRender.render(plugin, player);
+                    }
+                }, () -> tasks.remove(uuid), 1L, period));
     }
 
     public void remove(Player player) {
-        if (player == null) return;
-        this.remove(player.getUniqueId());
+        remove(player.getUniqueId());
     }
 
     public void remove(UUID uuid) {
-        particleMapper.remove(uuid);
+        ScheduledTask task = tasks.remove(uuid);
+        if (task != null) {
+            task.cancel();
+        }
     }
 
     public boolean contains(UUID uuid) {
-        return particleMapper.containsKey(uuid);
+        return tasks.containsKey(uuid);
+    }
+
+    public void stop() {
+        tasks.values().forEach(ScheduledTask::cancel);
+        tasks.clear();
     }
 }

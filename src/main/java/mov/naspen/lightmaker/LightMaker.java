@@ -27,7 +27,6 @@ public final class LightMaker extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new BlockReplacement(), this);
         getServer().getPluginManager().registerEvents(new BlockPlacement(), this);
         Lights.makeLights();
-        projector = new Highlighter(this);
 
         this.saveDefaultConfig();
         //If setting is true, register player log-in event.
@@ -42,7 +41,8 @@ public final class LightMaker extends JavaPlugin {
             addLevelRecipe(this);
         }
         if(this.getConfig().getBoolean("stop-entity-spawns-at-0")){getServer().getPluginManager().registerEvents(new CreatureSpawnEventListener(), this);}
-        watchPeriod = this.getConfig().getInt("watch-period-in-ticks") != 0 ? this.getConfig().getInt("watch-period-in-ticks") : 10;
+        watchPeriod = Math.max(1, this.getConfig().getInt("watch-period-in-ticks", 10));
+        projector = new Highlighter(this, watchPeriod);
         startWatching(this);
 
         this.getLogger().log(Level.INFO,"Lights can now be MADE by *your* hands!");
@@ -50,7 +50,9 @@ public final class LightMaker extends JavaPlugin {
 
     @Override
     public void onDisable() {
-        // Plugin shutdown logic
+        if (projector != null) {
+            projector.stop();
+        }
     }
 
 }

@@ -1,5 +1,6 @@
 package mov.naspen.lightmaker.events;
 
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.block.Block;
 import org.bukkit.block.data.type.Light;
@@ -30,6 +31,9 @@ public class CreatureSpawnEventListener implements Listener {
                 }
             }
             for (Location l : toCheck) {
+                if (!Bukkit.isOwnedByCurrentRegion(l)) {
+                    continue;
+                }
                 Block block = l.getBlock();
                 if (block.getType() == org.bukkit.Material.LIGHT && ((Light) block.getBlockData()).getLevel() == 0) {
                     e.setCancelled(true);
