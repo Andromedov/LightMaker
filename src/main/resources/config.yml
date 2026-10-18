@@ -20,11 +20,14 @@ light_ingredients:
   - glowstone
   - glass
   - glow_ink_sac
-#Set the quantity of an item to use the default light quantity
+#Each recipe consumes one listed item and one glass bottle.
+#quantity is the number of light blocks produced; 0 uses default_light_quantity.
 light_ingredients_to_bottle:
   torch:
     quantity: 1
   copper_torch:
+    quantity: 2
+  soul_torch:
     quantity: 2
   redstone_torch:
     quantity: 2
@@ -50,6 +53,22 @@ light_ingredients_to_bottle:
     quantity: 6
   waxed_oxidized_copper_lantern:
     quantity: 6
+  copper_bulb:
+    quantity: 8
+  exposed_copper_bulb:
+    quantity: 6
+  weathered_copper_bulb:
+    quantity: 4
+  oxidized_copper_bulb:
+    quantity: 2
+  waxed_copper_bulb:
+    quantity: 8
+  waxed_exposed_copper_bulb:
+    quantity: 6
+  waxed_weathered_copper_bulb:
+    quantity: 4
+  waxed_oxidized_copper_bulb:
+    quantity: 2
   glowstone:
     quantity: 4
   sea_lantern:
@@ -58,9 +77,63 @@ light_ingredients_to_bottle:
     quantity: 8
   shroomlight:
     quantity: 12
+  ochre_froglight:
+    quantity: 12
+  verdant_froglight:
+    quantity: 12
+  pearlescent_froglight:
+    quantity: 12
+  firefly_bush:
+    quantity: 2
+  glow_lichen:
+    quantity: 1
+  sea_pickle:
+    quantity: 1
+  jack_o_lantern:
+    quantity: 4
+  campfire:
+    quantity: 4
+  soul_campfire:
+    quantity: 6
+  crying_obsidian:
+    quantity: 8
+  magma_block:
+    quantity: 2
+  candle:
+    quantity: 1
+  white_candle:
+    quantity: 1
+  orange_candle:
+    quantity: 1
+  magenta_candle:
+    quantity: 1
+  light_blue_candle:
+    quantity: 1
+  yellow_candle:
+    quantity: 1
+  lime_candle:
+    quantity: 1
+  pink_candle:
+    quantity: 1
+  gray_candle:
+    quantity: 1
+  light_gray_candle:
+    quantity: 1
+  cyan_candle:
+    quantity: 1
+  purple_candle:
+    quantity: 1
+  blue_candle:
+    quantity: 1
+  brown_candle:
+    quantity: 1
+  green_candle:
+    quantity: 1
+  red_candle:
+    quantity: 1
+  black_candle:
+    quantity: 1
   end_rod:
     quantity: 0
-    #0 is a stand-in for the default_light_quantity value
   glow_ink_sac:
     quantity: 0
-    #0 is a stand-in for the default_light_quantity value
